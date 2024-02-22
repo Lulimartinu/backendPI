@@ -3,6 +3,7 @@ package com.dh.Xplorando.service.impl;
 import com.dh.Xplorando.dto.entrada.ProductoEntradaDto;
 import com.dh.Xplorando.dto.salida.ProductoSalidaDto;
 import com.dh.Xplorando.entity.Producto;
+import com.dh.Xplorando.exceptions.ResourceNotFoundException;
 import com.dh.Xplorando.repository.ProductoRepository;
 import com.dh.Xplorando.service.IProductoService;
 import org.apache.coyote.BadRequestException;
@@ -43,7 +44,7 @@ public class ProductoService implements IProductoService {
 
     //ELIMINAR PRODUCTO (ALTA)
     @Override
-    public void eliminarProductoPorId(Long id) {
+    public void eliminarProductoPorId(Long id)throws ResourceNotFoundException {
         if (buscarProductoPorId(id) != null){
             productoRepository.deleteById(id);
             LOGGER.warn("Se ha eliminado el paquete coon el id " + id);
@@ -56,7 +57,7 @@ public class ProductoService implements IProductoService {
 
     //BUSCAR PRODUCTO (MEDIA)
     @Override
-    public ProductoSalidaDto buscarProductoPorId(Long id) {  Producto productoBuscado = productoRepository.findById(id).orElse(null);
+    public ProductoSalidaDto buscarProductoPorId(Long id) throws ResourceNotFoundException {  Producto productoBuscado = productoRepository.findById(id).orElse(null);
         ProductoSalidaDto productoSalidaDto = null;
         if (productoBuscado != null) {
             productoSalidaDto = entidadAProductoSalidaDto(productoBuscado);
