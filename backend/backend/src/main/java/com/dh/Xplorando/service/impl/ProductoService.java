@@ -41,8 +41,8 @@ public class ProductoService implements IProductoService {
     //CREAR-REGISTRAR PRODUCTO (ALTA)
     @Override
     public ProductoSalidaDto crearProducto(ProductoEntradaDto producto) throws BadRequestException {
-        Producto producto1 = productoRepository.save(productoEntradaDtoaEntidad(producto));
-        ProductoSalidaDto productoSalidaDto = entidadAProductoSalidaDto(producto1);
+        Producto productoNuevo = productoRepository.save(productoEntradaDtoaEntidad(producto));
+        ProductoSalidaDto productoSalidaDto = entidadAProductoSalidaDto(productoNuevo);
         LOGGER.info("Se ha creado el paquete con éxito ", productoSalidaDto);
         return productoSalidaDto;
     }
