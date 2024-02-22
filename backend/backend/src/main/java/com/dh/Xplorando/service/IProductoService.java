@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface IProductoService {
    List<ProductoSalidaDto> listarProductos();
-
     ProductoSalidaDto crearProducto(ProductoEntradaDto producto) throws BadRequestException;
     void eliminarProductoPorId(Long id) ;
    ProductoSalidaDto buscarProductoPorId(Long id);

@@ -32,7 +32,7 @@ public class Imagen {
     //  deben propagarse a las entidades asociadas.
     //CascadeType.REFRESH: Indica que las operaciones de actualización de la entidad principal deben propagarse a las entidades asociadas.
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name="id_producto",referencedColumnName = "id")
-    private Producto producto;
+   // @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+   // @JoinColumn(name="producto_id",referencedColumnName = "id")
+   // private Producto producto;
 }

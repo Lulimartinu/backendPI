@@ -17,6 +17,7 @@ public class Categoria {
     private Long id;
     @Column(name="NOMBRE")
     private String nombreCategoria;
-    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Producto producto;
+
+   // @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+   // private Producto producto;
 }

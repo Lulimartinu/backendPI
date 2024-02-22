@@ -19,7 +19,6 @@ import lombok.Setter;
 
 public class ProductoEntradaDto {
     @NotNull(message = "El codigo no puede ser nulo")
-
     @Digits(integer = 10,fraction = 0,message = "El codigo no debe contener más de 10 digitos")
     private int codigoProducto;
     @NotNull(message = "El nombre no puede ser nulo")
