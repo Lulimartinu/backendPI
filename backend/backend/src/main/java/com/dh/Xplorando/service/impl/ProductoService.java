@@ -10,15 +10,20 @@ import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ProductoService implements IProductoService {
     private final Logger LOGGER = LoggerFactory.getLogger(ProductoService.class);
 
     private final ProductoRepository productoRepository;
 
     private final ModelMapper modelMapper;
+
+    @Autowired
+    //@Autowired se utiliza para inyectar objetos en otros objetos. Esto permite un acoplamiento suelto entre componentes y ayuda a mantener el código más mantenible.
 
     public ProductoService(ProductoRepository productoRepository, ModelMapper modelMapper) {
         this.productoRepository = productoRepository;
