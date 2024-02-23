@@ -36,15 +36,6 @@ public class Producto {
     @JoinColumn(name = "categoria_id",referencedColumnName = "id")
     private Categoria categoria;
 
-    //un producto tiene muchas img
-    //Cuando se utiliza FetchType.LAZY, la colección de entidades asociada se cargará desde la base de datos solo cuando se acceda explícitamente a ella. Esto significa que, inicialmente, solo se cargarán los datos de la entidad principal, y la colección de entidades asociada permanecerá sin cargarse hasta que se realice una operación que la requiera. Esta estrategia es útil cuando no siempre necesitas la colección de forma inmediata y puede ayudar a mejorar el rendimiento en ciertos escenarios.
-    //cascade = CascadeType.ALL
-
-    //cascade?, join column no va en imagen? y aca no
-
-    //@JoinColumn(name="imagen_id", referencedColumnName = "id")
-
-    //private List<Imagen> imagenes = new.ArrayList<>();
 
 
 }

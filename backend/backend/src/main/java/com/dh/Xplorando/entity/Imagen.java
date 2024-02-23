@@ -19,7 +19,7 @@ public class Imagen {
     @Column(name="URL")
     private String urlImagen;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)  // //la fk de la entidad que es una, va del lado de la entidad que es muchas
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "producto_id", referencedColumnName = "id")
     private Producto producto;
 
@@ -35,7 +35,4 @@ public class Imagen {
     //  deben propagarse a las entidades asociadas.
     //CascadeType.REFRESH: Indica que las operaciones de actualización de la entidad principal deben propagarse a las entidades asociadas.
 
-   // @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-   // @JoinColumn(name="producto_id",referencedColumnName = "id")
-   // private Producto producto;
 }

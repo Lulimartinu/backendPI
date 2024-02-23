@@ -75,7 +75,20 @@ public class ProductoService implements IProductoService {
 
 
     //MAPEO
+    private void configureMapping() {
+        //traer imagenes
+        modelMapper.typeMap(ProductoEntradaDto.class, Producto.class)
+                .addMappings(mapper -> mapper.map(ProductoEntradaDto::getImagenEntradaDto, Producto::setImagenes));
+        modelMapper.typeMap(Producto.class, ProductoSalidaDto.class)
+                .addMappings(mapper -> mapper.map(Producto::getImagenes, ProductoSalidaDto::setImagenSalidaDto));
 
+        //traer de que categoría es
+        modelMapper.typeMap(ProductoEntradaDto.class, Producto.class)
+                .addMappings(mapper -> mapper.map(ProductoEntradaDto::getCategoriaEntradaDto, Producto::setCategoria));
+        modelMapper.typeMap(Producto.class, ProductoSalidaDto.class)
+                .addMappings(mapper -> mapper.map(Producto::getCategoria, ProductoSalidaDto::setCategoriaSalidaDto));
+
+    }
     private Producto productoEntradaDtoaEntidad(ProductoEntradaDto pacienteEntradaDto) {
         return modelMapper.map(productoRepository, Producto.class);
     }
