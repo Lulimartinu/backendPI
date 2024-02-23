@@ -19,7 +19,7 @@ public class Imagen {
     @Column(name="URL")
     private String urlImagen;
 
-    @ManyToOne   // //la fk de la entidad que es una, va del lado de la entidad que es muchas
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)  // //la fk de la entidad que es una, va del lado de la entidad que es muchas
     @JoinColumn(name = "producto_id", referencedColumnName = "id")
     private Producto producto;
 
