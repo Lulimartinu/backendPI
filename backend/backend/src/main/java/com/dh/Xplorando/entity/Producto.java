@@ -27,8 +27,15 @@ public class Producto {
     private String direccion;
 
     @OneToMany(mappedBy ="producto", fetch = FetchType.LAZY)
-    @JoinColumn(name="imagen_id", referencedColumnName = "id")
+    //cascade?, join column no va en imagen? y aca no
+
+    //@JoinColumn(name="imagen_id", referencedColumnName = "id")
+
+    //private List<Imagen> imagenes = new.ArrayList<>();
     private Imagen imagen;
+
+
+    //esto lo entiendo esta ok
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "categoria_id",referencedColumnName = "id")
     private Categoria categoria;

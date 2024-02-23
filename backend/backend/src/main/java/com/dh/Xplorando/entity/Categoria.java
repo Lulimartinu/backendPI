@@ -18,6 +18,10 @@ public class Categoria {
     @Column(name="NOMBRE")
     private String nombreCategoria;
 
+    // esto esta ok y lo entiendo
+    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    private Producto producto;
    // @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
    // private Producto producto;
 }

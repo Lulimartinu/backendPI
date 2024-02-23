@@ -15,10 +15,13 @@ import lombok.*;
 public class Imagen {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
     @Column(name="URL")
     private String urlImagen;
+
+    @ManyToOne   // //la fk de la entidad que es una, va del lado de la entidad que es muchas
+    @JoinColumn(name = "producto_id", referencedColumnName = "id")
+    private Producto producto;
 
     //CascadeType.Persist
     //CascadeType.PERSIST indica que las operaciones de persistencia (guardar en la base de datos) deben propagarse automáticamente a las entidades relacionadas.Esto significa que cuando guardas una nueva imagen, también se persistirá automáticamente el producto asociado.
