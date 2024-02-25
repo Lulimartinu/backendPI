@@ -41,7 +41,7 @@ public class ImagenService implements IImagenService {
 
     //MAPEO
     private Imagen imagenEntradaAentidad(ImagenEntradaDto imagenEntradaDto) {
-        return modelMapper.map(imagenRepository, Imagen.class);
+        return modelMapper.map(imagenEntradaDto, Imagen.class);
     }
 
     private ImagenSalidaDto entidadAImagenSalidaDto(Imagen imagen) {

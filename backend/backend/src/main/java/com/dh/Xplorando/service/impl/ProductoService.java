@@ -91,7 +91,7 @@ public class ProductoService implements IProductoService {
     }
 
     private Producto productoEntradaDtoaEntidad(ProductoEntradaDto productoEntradaDto) {
-        return modelMapper.map(productoRepository, Producto.class);
+        return modelMapper.map(productoEntradaDto, Producto.class);
     }
 
     private ProductoSalidaDto entidadAProductoSalidaDto(Producto producto) {
