@@ -28,6 +28,7 @@ public class ProductoService implements IProductoService {
     public ProductoService(ProductoRepository productoRepository, ModelMapper modelMapper) {
         this.productoRepository = productoRepository;
         this.modelMapper = modelMapper;
+        configureMapping();
     }
 
     //LISTAR-DETALALR (MEDIA)
@@ -87,9 +88,9 @@ public class ProductoService implements IProductoService {
                 .addMappings(mapper -> mapper.map(ProductoEntradaDto::getCategoriaEntradaDto, Producto::setCategoria));
         modelMapper.typeMap(Producto.class, ProductoSalidaDto.class)
                 .addMappings(mapper -> mapper.map(Producto::getCategoria, ProductoSalidaDto::setCategoriaSalidaDto));
-
     }
-    private Producto productoEntradaDtoaEntidad(ProductoEntradaDto pacienteEntradaDto) {
+
+    private Producto productoEntradaDtoaEntidad(ProductoEntradaDto productoEntradaDto) {
         return modelMapper.map(productoRepository, Producto.class);
     }
 
