@@ -22,7 +22,7 @@ public class CategoriaController {
         this.iCategoriaService = iCategoriaService;
     }
 
-    @PostMapping("crear")
+    @PostMapping("/crear")
     public ResponseEntity<CategoriaSalidaDto> crearCategoria(@Valid @RequestBody CategoriaEntradaDto categoriaEntradaDto) throws BadRequestException {
         return new ResponseEntity<>(iCategoriaService.crearCategoria(categoriaEntradaDto), HttpStatus.CREATED);
     }
