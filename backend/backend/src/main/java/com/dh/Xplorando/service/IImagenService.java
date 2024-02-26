@@ -15,5 +15,5 @@ public interface IImagenService {
     ImagenSalidaDto crearImagen(ImagenEntradaDto imagenEntradaDto) ;
 
 
-
+    ImagenSalidaDto buscarImagenPorId(Long id);
 }

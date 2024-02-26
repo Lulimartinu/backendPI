@@ -1,6 +1,7 @@
 package com.dh.Xplorando.dto.salida;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductoSalidaDto {
 
     private Long id;
@@ -25,8 +26,8 @@ public class ProductoSalidaDto {
 
     private String direccion;
 
-    private ImagenSalidaDto imagenSalidaDto;
+    private ImagenProductoSalidaDto imagenProductoSalidaDto;
 
-    private CategoriaSalidaDto categoriaSalidaDto;
+    private CategoriaProductoSalidaDto categoriaProductoSalidaDto;
 }
 

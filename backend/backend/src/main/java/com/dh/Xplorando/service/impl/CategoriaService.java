@@ -5,13 +5,11 @@ import com.dh.Xplorando.dto.salida.CategoriaSalidaDto;
 import com.dh.Xplorando.entity.Categoria;
 import com.dh.Xplorando.repository.CategoriaRepository;
 import com.dh.Xplorando.service.ICategoriaService;
-import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 @Service
 public class CategoriaService implements ICategoriaService {
     private final Logger LOGGER = LoggerFactory.getLogger(CategoriaService.class);
@@ -30,6 +28,21 @@ public class CategoriaService implements ICategoriaService {
         CategoriaSalidaDto categoriaResultado = entidadAdtoSalida(categoriaRegistrada);
         LOGGER.info("Categoria registrada: " + categoriaRegistrada);
         return categoriaResultado;
+    }
+
+    @Override
+    public CategoriaSalidaDto buscarCategoriaPorId(Long id) {
+        Categoria categoriaBuscada = categoriaRepository.findById(id).orElse(null);
+        CategoriaSalidaDto categoriaSalidaDto = null;
+
+        if (categoriaBuscada != null) {
+            categoriaSalidaDto = entidadAdtoSalida(categoriaBuscada);
+            LOGGER.info("Se ha encontrado la Categoría: {}", categoriaSalidaDto);
+        } else
+        {LOGGER.error("No se ha encontrado una Categoria en la BDD con el id" + id);
+        }
+
+        return categoriaSalidaDto;
     }
 
     //MAPEO

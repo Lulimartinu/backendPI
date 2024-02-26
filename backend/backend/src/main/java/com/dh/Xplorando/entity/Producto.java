@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -13,7 +14,7 @@ import java.util.Set;
 @ToString
 
 @Entity
-@Table(name="PRODUCTOS", uniqueConstraints = {@UniqueConstraint(columnNames = "CODIGO")})
+@Table(name="PRODUCTOS")
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +30,11 @@ public class Producto {
     @Column(name="DIRECCION")
     private String direccion;
 
-    @OneToMany(mappedBy ="producto", fetch = FetchType.LAZY)
-    private Set<Imagen> imagenes = new HashSet<>();
+  @OneToMany(mappedBy ="producto", fetch = FetchType.LAZY)
+   private List<Imagen> imagenes ;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "categoria_id",referencedColumnName = "id")
+    @ManyToOne // (fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "categoria_id") //referencedColumnName = "id"
     private Categoria categoria;
 
 

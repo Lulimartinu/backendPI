@@ -3,16 +3,13 @@ package com.dh.Xplorando.service.impl;
 import com.dh.Xplorando.dto.entrada.ImagenEntradaDto;
 import com.dh.Xplorando.dto.salida.ImagenSalidaDto;
 import com.dh.Xplorando.entity.Imagen;
-import com.dh.Xplorando.exceptions.ResourceNotFoundException;
 import com.dh.Xplorando.repository.ImagenRepository;
 import com.dh.Xplorando.service.IImagenService;
-import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 @Service
 public class ImagenService implements IImagenService {
 
@@ -28,23 +25,52 @@ public class ImagenService implements IImagenService {
     }
 
     @Override
-    public ImagenSalidaDto crearImagen(ImagenEntradaDto imagenEntradaDto) {
-        Imagen imagenNueva = imagenEntradaAentidad(imagenEntradaDto);
-        Imagen imagenCreada = imagenRepository.save(imagenNueva);
-        ImagenSalidaDto imagenSalidaDto = entidadAImagenSalidaDto(imagenCreada);
+    public ImagenSalidaDto crearImagen(ImagenEntradaDto imagen) {
+        Imagen imagenGuardada = imagenRepository.save(dtoEntradaAentidad((imagen)));
+        ImagenSalidaDto imagenSalidaDto = entidadADtoSalida(imagenGuardada);
         LOGGER.info("Se ha creado una imagen con éxito ", imagenSalidaDto);
+        return  imagenSalidaDto ;}
+
+    @Override
+    public ImagenSalidaDto buscarImagenPorId(Long id) {
+        Imagen imagenBuscada = imagenRepository.findById(id).orElse(null);
+        ImagenSalidaDto imagenSalidaDto = null;
+
+        if (imagenBuscada != null) {
+            imagenSalidaDto = entidadADtoSalida(imagenBuscada);
+            LOGGER.info("Se ha encontrado la Imagen: {}", imagenSalidaDto);
+        } else
+        {LOGGER.error("No se ha encontrado una Imagen en la BDD con el id" + id);
+        }
+
         return imagenSalidaDto;
     }
 
 
+              /*  dtoEntradaAentidad(imagenEntradaDto);
+        Imagen imagenCreada = imagenRepository.save(imagenNueva);
+        ImagenSalidaDto imagenSalidaDto = entidadADtoSalida(imagenCreada);
+        LOGGER.info("Se ha creado una imagen con éxito ", imagenSalidaDto);
+        return imagenSalidaDto;
+    }*/
+
+  /*  @Override
+    public OdontologoSalidaDto crearOdontologo(OdontologoEntradaDto odontologo) {
+        Odontologo odontoGuardado = odontoRepository.save(dtoEntradaAEntidad(odontologo));
+        OdontologoSalidaDto odontologoSalidaDto = entidadADtoSalida(odontoGuardado);
+        LOGGER.info("Se ha creado un nuevo Odontologo : {}", odontologoSalidaDto);
+        return odontologoSalidaDto;
+    }
 
 
+
+*/
     //MAPEO
-    private Imagen imagenEntradaAentidad(ImagenEntradaDto imagenEntradaDto) {
+    private Imagen dtoEntradaAentidad(ImagenEntradaDto imagenEntradaDto) {
         return modelMapper.map(imagenEntradaDto, Imagen.class);
     }
 
-    private ImagenSalidaDto entidadAImagenSalidaDto(Imagen imagen) {
+    private ImagenSalidaDto entidadADtoSalida(Imagen imagen) {
         return modelMapper.map(imagen, ImagenSalidaDto.class);
     }
 

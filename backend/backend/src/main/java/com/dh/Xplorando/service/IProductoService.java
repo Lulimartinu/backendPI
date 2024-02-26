@@ -2,6 +2,7 @@ package com.dh.Xplorando.service;
 
 import com.dh.Xplorando.dto.entrada.ProductoEntradaDto;
 import com.dh.Xplorando.dto.salida.ProductoSalidaDto;
+import com.dh.Xplorando.entity.Producto;
 import com.dh.Xplorando.exceptions.ResourceNotFoundException;
 import org.apache.coyote.BadRequestException;
 

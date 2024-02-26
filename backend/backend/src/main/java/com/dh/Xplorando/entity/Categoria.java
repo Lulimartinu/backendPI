@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -22,6 +23,6 @@ public class Categoria {
     private String nombreCategoria;
 
    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-   private Set<Producto> productos = new HashSet<>();
+   private List<Producto> productos ;
 
 }

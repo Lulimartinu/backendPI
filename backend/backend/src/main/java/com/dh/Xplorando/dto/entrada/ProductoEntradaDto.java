@@ -36,10 +36,9 @@ public class ProductoEntradaDto {
     @NotBlank(message = "Debe completar con una direaccion")
     private String direccion;
 
-    //validan en sus propias clases
-    @Valid
-    private ImagenEntradaDto imagenEntradaDto;
-    @Valid
-    private CategoriaEntradaDto categoriaEntradaDto;
+    // TODO: BORRAR
+    //private List<> imagenId;
+
+    private Long categoriaId;
 
 }
