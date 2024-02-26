@@ -39,7 +39,7 @@ public class ImagenController {
 
         public static String UPLOAD_DIRECTORY = "/uploads";
 
-      @GetMapping("/uploadimage") public String displayUploadForm() {
+    /*  @GetMapping("/uploadimage") public String displayUploadForm() {
             return "imageupload/index";
         }
 
@@ -54,7 +54,7 @@ public class ImagenController {
             return "imageupload/index";
         }
 
-
+*/
 }
 
 

@@ -10,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ImagenService implements IImagenService {
 
@@ -30,6 +33,21 @@ public class ImagenService implements IImagenService {
         ImagenSalidaDto imagenSalidaDto = entidadADtoSalida(imagenGuardada);
         LOGGER.info("Se ha creado una imagen con éxito ", imagenSalidaDto);
         return  imagenSalidaDto ;}
+
+    @Override
+    public List<ImagenSalidaDto> listarImagenes() {
+        List<Imagen> imagenes = imagenRepository.findAll();
+        List<ImagenSalidaDto> imagenSalidaDtoList= new ArrayList<>();
+
+        for (Imagen img: imagenes){
+
+            ImagenSalidaDto imagenSalidaDto = entidadADtoSalida(img);
+            imagenSalidaDtoList.add(imagenSalidaDto);
+        }
+        LOGGER.info("Listado de todos las imagenes : " + imagenes);
+
+        return imagenSalidaDtoList;
+    }
 
     @Override
     public ImagenSalidaDto buscarImagenPorId(Long id) {
@@ -54,17 +72,7 @@ public class ImagenService implements IImagenService {
         return imagenSalidaDto;
     }*/
 
-  /*  @Override
-    public OdontologoSalidaDto crearOdontologo(OdontologoEntradaDto odontologo) {
-        Odontologo odontoGuardado = odontoRepository.save(dtoEntradaAEntidad(odontologo));
-        OdontologoSalidaDto odontologoSalidaDto = entidadADtoSalida(odontoGuardado);
-        LOGGER.info("Se ha creado un nuevo Odontologo : {}", odontologoSalidaDto);
-        return odontologoSalidaDto;
-    }
 
-
-
-*/
     //MAPEO
     private Imagen dtoEntradaAentidad(ImagenEntradaDto imagenEntradaDto) {
         return modelMapper.map(imagenEntradaDto, Imagen.class);

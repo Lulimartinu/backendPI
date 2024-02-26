@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -37,8 +39,10 @@ public class ProductoEntradaDto {
     private String direccion;
 
     // TODO: BORRAR
-    //private List<> imagenId;
+    //private List<ImagenEntradaDto> imagenId;
 
+    //CAMBIO ABAJO
+    private List<ImagenEntradaDto> imagenes;
     private Long categoriaId;
 
 }

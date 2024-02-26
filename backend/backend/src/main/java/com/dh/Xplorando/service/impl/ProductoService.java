@@ -1,11 +1,14 @@
 package com.dh.Xplorando.service.impl;
 
+import com.dh.Xplorando.dto.entrada.ImagenEntradaDto;
 import com.dh.Xplorando.dto.entrada.ProductoEntradaDto;
 import com.dh.Xplorando.dto.salida.*;
 import com.dh.Xplorando.entity.Categoria;
+import com.dh.Xplorando.entity.Imagen;
 import com.dh.Xplorando.entity.Producto;
 import com.dh.Xplorando.exceptions.ResourceNotFoundException;
 import com.dh.Xplorando.repository.CategoriaRepository;
+import com.dh.Xplorando.repository.ImagenRepository;
 import com.dh.Xplorando.repository.ProductoRepository;
 import com.dh.Xplorando.service.IProductoService;
 import org.apache.coyote.BadRequestException;
@@ -15,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,6 +28,8 @@ public class ProductoService implements IProductoService {
     private final ProductoRepository productoRepository;
 
     private final CategoriaRepository categoriaRepository;
+    //CAMBIO
+    private final ImagenRepository imagenRepository;
 
     private final ModelMapper modelMapper;
     private final CategoriaService categoriaService;
@@ -32,9 +38,10 @@ public class ProductoService implements IProductoService {
 
     //@Autowired se utiliza para inyectar objetos en otros objetos. Esto permite un acoplamiento suelto entre componentes y ayuda a mantener el código más mantenible.
     @Autowired
-    public ProductoService(ProductoRepository productoRepository, CategoriaRepository categoriaRepository, ModelMapper modelMapper, CategoriaService categoriaService, ImagenService imagenService) {
+    public ProductoService(ProductoRepository productoRepository, CategoriaRepository categoriaRepository, ImagenRepository imagenRepository, ModelMapper modelMapper, CategoriaService categoriaService, ImagenService imagenService) {
         this.productoRepository = productoRepository;
         this.categoriaRepository = categoriaRepository;
+        this.imagenRepository = imagenRepository;
         this.modelMapper = modelMapper;
         this.categoriaService = categoriaService;
         this.imagenService = imagenService;
@@ -56,11 +63,9 @@ public class ProductoService implements IProductoService {
 
     //CREAR-REGISTRAR PRODUCTO (ALTA)
     @Override
-    public ProductoSalidaDto crearProducto(ProductoEntradaDto producto) throws BadRequestException {
-
-        Categoria categoria = categoriaRepository.findById(producto.getCategoriaId()).orElse(null);
-        // TODO: BORRAR
-        // ImagenSalidaDto imagen = imagenService.buscarImagenPorId(producto.getImagenId());
+    public ProductoSalidaDto crearProducto(ProductoEntradaDto productoEntradaDto) throws BadRequestException {
+        //aca va con imagen ??????????
+        Categoria categoria = categoriaRepository.findById(productoEntradaDto.getCategoriaId()).orElse(null);
 
         if (categoria == null ) {
             LOGGER.error("No se encuentra la Categoría en nuestra BDD");
@@ -68,11 +73,21 @@ public class ProductoService implements IProductoService {
         }
 
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
-        Producto productoCreado = productoRepository.save(modelMapper.map(producto, Producto.class));
+        Producto productoCreado = productoRepository.save(modelMapper.map(productoEntradaDto, Producto.class));
         productoCreado.setCategoria(categoria);
-        ProductoSalidaDto productoSalidaDto = entidadADto(productoCreado);
-        LOGGER.info("Nuevo producto registrado con exito: {}", productoSalidaDto);
 
+        for(ImagenEntradaDto imagenEntradaDto :productoEntradaDto.getImagenes()) {
+            Imagen imagenToSave = modelMapper.map(imagenEntradaDto, Imagen.class);
+            imagenToSave.setProducto(productoCreado);
+            imagenRepository.save(imagenToSave);
+        }
+
+        Producto producto = productoRepository.findById(productoCreado.getId()).orElse(null);
+
+
+        ProductoSalidaDto productoSalidaDto = entidadADto(producto);
+        LOGGER.info("Nuevo producto registrado con exito: {}", productoSalidaDto);
+        
         return productoSalidaDto;
     }
 
@@ -151,13 +166,24 @@ public class ProductoService implements IProductoService {
         return modelMapper.map(categoriaService.buscarCategoriaPorId(id), CategoriaProductoSalidaDto.class);
     }
 
-    private ImagenProductoSalidaDto imagenSalidaDtoASalidaProductoDto(Long id) {
-        return modelMapper.map(imagenService.buscarImagenPorId(id), ImagenProductoSalidaDto.class);
+    private List<ImagenSalidaDto> imagenSalidaDtoASalidaProductoDto(List<Imagen> imagenList){
+        List<ImagenSalidaDto>  imagenListDto = new ArrayList<ImagenSalidaDto>();
+
+            for(Imagen imagen: imagenList){
+                ImagenSalidaDto imagenSalidaDto = modelMapper.map(imagen,ImagenSalidaDto.class);
+                imagenListDto.add(imagenSalidaDto);
+            }
+
+        return imagenListDto;
     }
 
     private ProductoSalidaDto entidadADto(Producto producto){
         ProductoSalidaDto productoSalidaDto = modelMapper.map(producto, ProductoSalidaDto.class);
         productoSalidaDto.setCategoriaProductoSalidaDto(categoriaSalidaDtoASalidaProductoDto(producto.getCategoria().getId()));
+
+        var imagenSalidaDtoList = imagenSalidaDtoASalidaProductoDto(producto.getImagenes());
+        productoSalidaDto.setImagenSalidaDtoList(imagenSalidaDtoList);
+
         return productoSalidaDto;
     }
 

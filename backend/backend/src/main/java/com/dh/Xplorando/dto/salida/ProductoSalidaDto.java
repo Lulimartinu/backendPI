@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,7 +28,7 @@ public class ProductoSalidaDto {
 
     private String direccion;
 
-    private ImagenProductoSalidaDto imagenProductoSalidaDto;
+    private List<ImagenSalidaDto> imagenSalidaDtoList;
 
     private CategoriaProductoSalidaDto categoriaProductoSalidaDto;
 }
