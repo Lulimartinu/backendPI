@@ -2,6 +2,7 @@ package com.dh.Xplorando.controller;
 
 import com.dh.Xplorando.dto.entrada.ProductoEntradaDto;
 import com.dh.Xplorando.dto.salida.ProductoSalidaDto;
+import com.dh.Xplorando.exceptions.ResourceNotFoundException;
 import com.dh.Xplorando.service.IProductoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -37,11 +38,14 @@ public class ProductoController {
     }
 
     @PostMapping("/registrar")
-    public ResponseEntity<ProductoSalidaDto> crearTurno(@Valid @RequestBody ProductoEntradaDto producto) throws BadRequestException {
+    public ResponseEntity<ProductoSalidaDto> crearProducto(@Valid @RequestBody ProductoEntradaDto producto) throws BadRequestException {
         return new ResponseEntity<>(productoService.crearProducto(producto), HttpStatus.CREATED);
     }
+    @GetMapping("/listar")
+    public ResponseEntity<List<ProductoSalidaDto>> listarProductos() throws ResourceNotFoundException {
+        return new ResponseEntity<>(productoService.listarProductos(),HttpStatus.OK);
+    }
 
-    ;
 }
 
 

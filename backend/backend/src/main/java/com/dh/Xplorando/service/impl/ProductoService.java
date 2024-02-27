@@ -58,7 +58,9 @@ public class ProductoService implements IProductoService {
 
     @Override
     public List<ProductoSalidaDto> listarProductos() {
-        return null;
+        List<ProductoSalidaDto> productos = productoRepository.findAll().stream().map(this::entidadADto).toList();
+        LOGGER.info("LISTA DE LOS PRODUCTOS DISPONIBLES : {}", productos);
+        return productos;
     }
 
     //CREAR-REGISTRAR PRODUCTO (ALTA)
