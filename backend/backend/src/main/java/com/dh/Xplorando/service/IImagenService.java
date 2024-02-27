@@ -13,7 +13,7 @@ import java.util.List;
 public interface IImagenService {
     List<ImagenSalidaDto> listarImagenes();
 
-    ImagenSalidaDto crearImagen(ImagenEntradaDto imagenEntradaDto) ;
+   ImagenSalidaDto crearImagen(ImagenEntradaDto imagenEntradaDto) ;
 
 
     ImagenSalidaDto buscarImagenPorId(Long id);

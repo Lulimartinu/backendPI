@@ -32,7 +32,7 @@ public class ImagenController {
     }
 
 
-    @PostMapping("/crear")
+   @PostMapping("/crear")
     public ResponseEntity<ImagenSalidaDto> crearImagen(@RequestBody @Valid ImagenEntradaDto imagenEntradaDto) {
         return new ResponseEntity<>(imagenService.crearImagen(imagenEntradaDto), HttpStatus.CREATED);
     }

@@ -20,7 +20,7 @@ public class Imagen {
     private String urlImagen;
 
     //@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne// (fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "producto_id")
     private Producto producto;
 

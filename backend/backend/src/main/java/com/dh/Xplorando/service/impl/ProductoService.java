@@ -78,6 +78,7 @@ public class ProductoService implements IProductoService {
 
         for(ImagenEntradaDto imagenEntradaDto :productoEntradaDto.getImagenes()) {
             Imagen imagenToSave = modelMapper.map(imagenEntradaDto, Imagen.class);
+            LOGGER.info("imageEEEEEEEEEEEEEEEEEEEEN" + imagenToSave);
             imagenToSave.setProducto(productoCreado);
             imagenRepository.save(imagenToSave);
         }
@@ -130,6 +131,8 @@ public class ProductoService implements IProductoService {
         modelMapper.typeMap(Producto.class, ProductoSalidaDto.class)
                 .addMappings(mapper -> mapper.map(Producto::getImagenes, ProductoSalidaDto::setImagenSalidaDto));
 
+
+
         //traer de que categoría es
        modelMapper.typeMap(ProductoEntradaDto.class, Producto.class)
                 .addMappings(mapper -> mapper.map(ProductoEntradaDto::getCategoriaEntradaDto, Producto::setCategoria));
@@ -169,7 +172,7 @@ public class ProductoService implements IProductoService {
     private List<ImagenSalidaDto> imagenSalidaDtoASalidaProductoDto(List<Imagen> imagenList){
         List<ImagenSalidaDto>  imagenListDto = new ArrayList<ImagenSalidaDto>();
 
-            for(Imagen imagen: imagenList){
+            for(Imagen imagen : imagenList){
                 ImagenSalidaDto imagenSalidaDto = modelMapper.map(imagen,ImagenSalidaDto.class);
                 imagenListDto.add(imagenSalidaDto);
             }
@@ -181,8 +184,19 @@ public class ProductoService implements IProductoService {
         ProductoSalidaDto productoSalidaDto = modelMapper.map(producto, ProductoSalidaDto.class);
         productoSalidaDto.setCategoriaProductoSalidaDto(categoriaSalidaDtoASalidaProductoDto(producto.getCategoria().getId()));
 
-        var imagenSalidaDtoList = imagenSalidaDtoASalidaProductoDto(producto.getImagenes());
+       var imagenSalidaDtoList = imagenSalidaDtoASalidaProductoDto(producto.getImagenes());
         productoSalidaDto.setImagenSalidaDtoList(imagenSalidaDtoList);
+
+
+      /* seteo las img?
+      var imagenSalidaDtoList = imagenSalidaDtoASalidaProductoDto(producto.getImagenes());
+              if (!imagenSalidaDtoList.isEmpty()) {
+            ImagenSalidaDto primeraImagen = imagenSalidaDtoList.get(0);
+            productoSalidaDto.setImagenSalidaDtoList(primeraImagen.getUrlImagen());
+            productoSalidaDto.setImagenSalidaDtoList(primeraImagen.getId());
+            }
+            productoSalidaDto.setImagenSalidaDtoList(imagenSalidaDtoList);
+       */
 
         return productoSalidaDto;
     }

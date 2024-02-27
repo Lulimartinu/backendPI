@@ -27,7 +27,7 @@ public class ImagenService implements IImagenService {
         this.modelMapper = modelMapper;
     }
 
-    @Override
+   @Override
     public ImagenSalidaDto crearImagen(ImagenEntradaDto imagen) {
         Imagen imagenGuardada = imagenRepository.save(dtoEntradaAentidad((imagen)));
         ImagenSalidaDto imagenSalidaDto = entidadADtoSalida(imagenGuardada);

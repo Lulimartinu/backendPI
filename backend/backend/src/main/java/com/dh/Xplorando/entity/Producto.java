@@ -31,7 +31,7 @@ public class Producto {
     @Column(name="DIRECCION")
     private String direccion;
 
-  @OneToMany(mappedBy ="producto", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy ="producto", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
    private List<Imagen> imagenes ;
 
     @ManyToOne // (fetch = FetchType.LAZY,cascade = CascadeType.ALL)
