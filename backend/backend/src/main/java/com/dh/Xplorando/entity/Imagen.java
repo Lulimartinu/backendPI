@@ -19,9 +19,9 @@ public class Imagen {
     @Column(name="URL")
     private String urlImagen;
 
-    //@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @ManyToOne// (fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "producto_id")
+
+    @ManyToOne(optional = false) // (fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "producto_id",nullable = false)
     private Producto producto;
 
     //CascadeType.Persist

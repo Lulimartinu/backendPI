@@ -1,6 +1,7 @@
 package com.dh.Xplorando;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -25,11 +26,12 @@ public class BackendApplication {
 	}
 
 	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
+	public ModelMapper getStrictModelMapper() {
+		var modelMapper = new ModelMapper();
+		var configuration = modelMapper.getConfiguration();
+		configuration.setMatchingStrategy(MatchingStrategies.STRICT);
+		return modelMapper;
 	}
-
-
 
 }
 

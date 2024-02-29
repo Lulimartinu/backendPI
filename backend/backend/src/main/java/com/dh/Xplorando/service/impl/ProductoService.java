@@ -66,37 +66,37 @@ public class ProductoService implements IProductoService {
     //CREAR-REGISTRAR PRODUCTO (ALTA)
     @Override
     public ProductoSalidaDto crearProducto(ProductoEntradaDto productoEntradaDto) throws BadRequestException {
-        //aca va con imagen ??????????
         Categoria categoria = categoriaRepository.findById(productoEntradaDto.getCategoriaId()).orElse(null);
-
-        if (categoria == null ) {
+        if (categoria == null) {
             LOGGER.error("No se encuentra la Categoría en nuestra BDD");
             throw new BadRequestException("No se encuentra la Categoría en nuestra BDD");
         }
 
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
-        Producto productoCreado = productoRepository.save(modelMapper.map(productoEntradaDto, Producto.class));
-        productoCreado.setCategoria(categoria);
-
-        for(ImagenEntradaDto imagenEntradaDto :productoEntradaDto.getImagenes()) {
-            Imagen imagenToSave = modelMapper.map(imagenEntradaDto, Imagen.class);
-            LOGGER.info("imageEEEEEEEEEEEEEEEEEEEEN" + imagenToSave);
-            imagenToSave.setProducto(productoCreado);
-            imagenRepository.save(imagenToSave);
+        Producto productoEntidad = modelMapper.map(productoEntradaDto, Producto.class);
+       // productoEntidad.setId(Long.parseLong("0"));
+        List<Imagen> imagenesList = new ArrayList<>();
+        for (ImagenEntradaDto imagenEntradaDto : productoEntradaDto.getImagenes()) {
+            Imagen imagenEntidad = modelMapper.map(imagenEntradaDto, Imagen.class);
+            LOGGER.info("imageEEEEEEEEEEEEEEEEEEEEN" + imagenEntidad);
+            imagenEntidad.setProducto(productoEntidad);
+            imagenesList.add(imagenEntidad);
         }
+        productoEntidad.setImagenes(imagenesList);
+        Producto productoCreado = productoRepository.save(productoEntidad);
+        productoCreado.setCategoria(categoria);
 
         Producto producto = productoRepository.findById(productoCreado.getId()).orElse(null);
 
 
         ProductoSalidaDto productoSalidaDto = entidadADto(producto);
         LOGGER.info("Nuevo producto registrado con exito: {}", productoSalidaDto);
-        
+
         return productoSalidaDto;
     }
 
 
-
-        //ELIMINAR PRODUCTO (ALTA)
+    //ELIMINAR PRODUCTO (ALTA)
   /*  @Override
     public void eliminarProductoPorId(Long id)throws ResourceNotFoundException {
         if (buscarProductoPorId(id) != null){
@@ -109,7 +109,7 @@ public class ProductoService implements IProductoService {
 
     }*/
 
-        //BUSCAR PRODUCTO (MEDIA)
+    //BUSCAR PRODUCTO (MEDIA)
    /* @Override
     public ProductoSalidaDto buscarProductoPorId(Long id){
         Producto productoBuscado = productoRepository.findById(id).orElse(null);
@@ -125,7 +125,7 @@ public class ProductoService implements IProductoService {
     }
 */
 
-        //MAPEO
+    //MAPEO
   /* private void configureMapping() {
 
        modelMapper.typeMap(ProductoEntradaDto.class, Producto.class)
@@ -171,22 +171,22 @@ public class ProductoService implements IProductoService {
         return modelMapper.map(categoriaService.buscarCategoriaPorId(id), CategoriaProductoSalidaDto.class);
     }
 
-    private List<ImagenSalidaDto> imagenSalidaDtoASalidaProductoDto(List<Imagen> imagenList){
-        List<ImagenSalidaDto>  imagenListDto = new ArrayList<ImagenSalidaDto>();
+    private List<ImagenSalidaDto> imagenSalidaDtoASalidaProductoDto(List<Imagen> imagenList) {
+        List<ImagenSalidaDto> imagenListDto = new ArrayList<ImagenSalidaDto>();
 
-            for(Imagen imagen : imagenList){
-                ImagenSalidaDto imagenSalidaDto = modelMapper.map(imagen,ImagenSalidaDto.class);
-                imagenListDto.add(imagenSalidaDto);
-            }
+        for (Imagen imagen : imagenList) {
+            ImagenSalidaDto imagenSalidaDto = modelMapper.map(imagen, ImagenSalidaDto.class);
+            imagenListDto.add(imagenSalidaDto);
+        }
 
         return imagenListDto;
     }
 
-    private ProductoSalidaDto entidadADto(Producto producto){
+    private ProductoSalidaDto entidadADto(Producto producto) {
         ProductoSalidaDto productoSalidaDto = modelMapper.map(producto, ProductoSalidaDto.class);
         productoSalidaDto.setCategoriaProductoSalidaDto(categoriaSalidaDtoASalidaProductoDto(producto.getCategoria().getId()));
 
-       var imagenSalidaDtoList = imagenSalidaDtoASalidaProductoDto(producto.getImagenes());
+        var imagenSalidaDtoList = imagenSalidaDtoASalidaProductoDto(producto.getImagenes());
         productoSalidaDto.setImagenSalidaDtoList(imagenSalidaDtoList);
 
 
