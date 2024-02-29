@@ -16,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class ProductoService implements IProductoService {
 
     //CREAR-REGISTRAR PRODUCTO (ALTA)
     @Override
-    public ProductoSalidaDto crearProducto(ProductoEntradaDto productoEntradaDto) throws BadRequestException {
+    public ProductoSalidaDto crearProducto(ProductoEntradaDto productoEntradaDto) throws BadRequestException, DataIntegrityViolationException {
         Categoria categoria = categoriaRepository.findById(productoEntradaDto.getCategoriaId()).orElse(null);
         if (categoria == null) {
             LOGGER.error("No se encuentra la Categoría en nuestra BDD");

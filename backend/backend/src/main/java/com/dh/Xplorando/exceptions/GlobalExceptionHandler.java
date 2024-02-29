@@ -1,5 +1,6 @@
 package com.dh.Xplorando.exceptions;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -41,4 +42,12 @@ public class GlobalExceptionHandler {
         });
         return exceptionMessage;
     }
+
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handlerDataIntegrityViolationException(DataIntegrityViolationException ex){
+        return "Error: El nombre del Producto ya existe, por favor, ingrese otro nombre";
+    }
+
 }

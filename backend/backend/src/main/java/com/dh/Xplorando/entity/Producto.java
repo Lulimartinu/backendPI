@@ -2,6 +2,7 @@ package com.dh.Xplorando.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
