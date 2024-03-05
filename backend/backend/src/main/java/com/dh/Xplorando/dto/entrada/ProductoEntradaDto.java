@@ -2,6 +2,7 @@ package com.dh.Xplorando.dto.entrada;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
@@ -11,7 +12,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -38,11 +41,11 @@ public class ProductoEntradaDto {
     @NotBlank(message = "Debe completar con una direaccion")
     private String direccion;
 
-    // TODO: BORRAR
-    //private List<ImagenEntradaDto> imagenId;
-
-    //CAMBIO ABAJO
     private List<ImagenEntradaDto> imagenes;
     private Long categoriaId;
+
+    @Valid
+    @JsonProperty("caracteristicas")
+    private Set<CaracteristicaEntradaDto> caracteristicaEntradaDto = new HashSet<>();
 
 }

@@ -39,6 +39,20 @@ public class Producto {
     @JoinColumn(name = "categoria_id") //referencedColumnName = "id"
     private Categoria categoria;
 
+    //The owner side is where we configure the relationship.
+    //We can do this with the @JoinTable annotation
+    //https://www.baeldung.com/jpa-many-to-many
+    //On the target side, we only have to provide the name of the field, which maps the relationship.
+    //merge --> fusiona,une el estado de el objeto dado en la otra entidad tmb
+
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinTable(
+            name="productos_caracteristicas",
+            joinColumns = @JoinColumn(name = "producto_id"),
+            inverseJoinColumns = @JoinColumn(name = "caracteristica_id")
+    )
+    private Set<Caracteristica> caracteristicas = new HashSet<>();
+
 
 
 }
