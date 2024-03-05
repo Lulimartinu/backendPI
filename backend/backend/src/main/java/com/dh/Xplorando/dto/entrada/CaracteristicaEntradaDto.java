@@ -31,6 +31,6 @@ public class CaracteristicaEntradaDto {
 
     @Valid
     @JsonProperty("productos")
-    private Set<ProductoEntradaDto> productoEntradaDto = new HashSet<>();
+    private Set<ProductoEntradaDto> productoEntradaDtos = new HashSet<>();
 
 }

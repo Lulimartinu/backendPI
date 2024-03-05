@@ -1,13 +1,16 @@
 package com.dh.Xplorando.dto.salida;
 
 
+import com.dh.Xplorando.dto.entrada.CaracteristicaEntradaDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -31,5 +34,7 @@ public class ProductoSalidaDto {
     private List<ImagenSalidaDto> imagenSalidaDtoList;
 
     private CategoriaProductoSalidaDto categoriaProductoSalidaDto;
+
+    private Set<CaracteristicaSalidaDto> caracteristicaSalidaDtos = new HashSet<>();
 }
 
