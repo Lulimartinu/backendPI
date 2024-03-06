@@ -2,6 +2,7 @@ package com.dh.Xplorando.service.impl;
 
 import com.dh.Xplorando.dto.entrada.ImagenEntradaDto;
 import com.dh.Xplorando.dto.entrada.ProductoEntradaDto;
+import com.dh.Xplorando.dto.entrada.modificacion.ProductoModificacionEntrada;
 import com.dh.Xplorando.dto.salida.*;
 import com.dh.Xplorando.entity.Categoria;
 import com.dh.Xplorando.entity.Imagen;
@@ -96,6 +97,11 @@ public class ProductoService implements IProductoService {
         return productoSalidaDto;
     }
 
+    @Override
+    public ProductoSalidaDto editarProducto(ProductoModificacionEntrada productoModificacionEntrada) throws ResourceNotFoundException {
+        return null;
+    }
+
 
     //ELIMINAR PRODUCTO (ALTA)
   /*  @Override
@@ -182,6 +188,8 @@ public class ProductoService implements IProductoService {
 
         return imagenListDto;
     }
+
+
 
     private ProductoSalidaDto entidadADto(Producto producto) {
         ProductoSalidaDto productoSalidaDto = modelMapper.map(producto, ProductoSalidaDto.class);
