@@ -38,6 +38,7 @@ public class ProductoService implements IProductoService {
     private final ImagenService imagenService;
 
 
+
     //@Autowired se utiliza para inyectar objetos en otros objetos. Esto permite un acoplamiento suelto entre componentes y ayuda a mantener el código más mantenible.
     @Autowired
     public ProductoService(ProductoRepository productoRepository, CategoriaRepository categoriaRepository, ImagenRepository imagenRepository, ModelMapper modelMapper, CategoriaService categoriaService, ImagenService imagenService) {
@@ -99,22 +100,25 @@ public class ProductoService implements IProductoService {
 
     @Override
     public ProductoSalidaDto editarProducto(ProductoModificacionEntrada productoModificacionEntrada) throws ResourceNotFoundException {
-        return null;
+        Producto productoAModificar= productoRepository.findById(productoModificacionEntrada.getId()).orElse(null);
+        ProductoSalidaDto productoSalidaDto = null;
+        if(productoAModificar != null){
+
+            productoAModificar.setCategoria(modelMapper.map(categoriaService.buscarCategoriaPorId(productoModificacionEntrada.getCategoriaId()), Categoria.class));
+            productoRepository.save(productoAModificar);
+
+            productoSalidaDto = entidadADto(productoAModificar);
+            LOGGER.warn("SE HA MODIFICADO EL PRODUCTO {}", productoSalidaDto);
+        }
+        else {
+            LOGGER.error("NO SE HA PODIDO MODIFICAR EL PRODUCTO");
+            throw new ResourceNotFoundException("NNO SE HA PODIDO MODIFICAR EL PRODUCTO");
+        }
+
+        return productoSalidaDto;
     }
 
 
-    //ELIMINAR PRODUCTO (ALTA)
-  /*  @Override
-    public void eliminarProductoPorId(Long id)throws ResourceNotFoundException {
-        if (buscarProductoPorId(id) != null){
-            productoRepository.deleteById(id);
-            LOGGER.warn("Se ha eliminado el paquete coon el id " + id);
-        }
-        else{
-            LOGGER.error("No se ha encontrado un paquete con el id " + id + " en la BDD");
-        }
-
-    }*/
 
     //BUSCAR PRODUCTO (MEDIA)
    /* @Override
