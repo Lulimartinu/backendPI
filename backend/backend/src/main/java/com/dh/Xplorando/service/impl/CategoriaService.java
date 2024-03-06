@@ -2,6 +2,7 @@ package com.dh.Xplorando.service.impl;
 
 import com.dh.Xplorando.dto.entrada.CategoriaEntradaDto;
 import com.dh.Xplorando.dto.salida.CategoriaSalidaDto;
+import com.dh.Xplorando.dto.salida.ProductoSalidaDto;
 import com.dh.Xplorando.entity.Categoria;
 import com.dh.Xplorando.repository.CategoriaRepository;
 import com.dh.Xplorando.service.ICategoriaService;
@@ -9,6 +10,8 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CategoriaService implements ICategoriaService {
@@ -19,6 +22,16 @@ public class CategoriaService implements ICategoriaService {
     public CategoriaService(CategoriaRepository categoriaRepository, ModelMapper modelMapper) {
         this.categoriaRepository = categoriaRepository;
         this.modelMapper = modelMapper;
+    }
+
+    @Override
+    public List<CategoriaSalidaDto> listarCategorias() {
+
+
+            List<CategoriaSalidaDto> categorias = categoriaRepository.findAll().stream().map(this::entidadAdtoSalida).toList();
+            LOGGER.info("LISTA DE LAS CATEGORÍAS DISPONIBLES : {}", categorias);
+            return categorias;
+
     }
 
     @Override
