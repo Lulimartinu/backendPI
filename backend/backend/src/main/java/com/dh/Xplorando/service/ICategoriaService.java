@@ -13,5 +13,5 @@ public interface ICategoriaService {
 
     CategoriaSalidaDto crearCategoria(CategoriaEntradaDto categoriaEntradaDto) throws BadRequestException;
 
-    CategoriaSalidaDto buscarCategoriaPorId(Long id) throws ResourceNotFoundException;;
+    CategoriaSalidaDto buscarCategoriaPorId(Long id) throws ResourceNotFoundException;
 }

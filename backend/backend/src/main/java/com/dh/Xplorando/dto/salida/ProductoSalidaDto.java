@@ -36,5 +36,6 @@ public class ProductoSalidaDto {
     private CategoriaProductoSalidaDto categoriaProductoSalidaDto;
 
     private Set<CaracteristicaSalidaDto> caracteristicaSalidaDtos = new HashSet<>();
+
 }
 

@@ -1,6 +1,7 @@
-package com.dh.Xplorando.entity;
+package com.dh.Xplorando.dto.entrada;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -8,38 +9,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
 @Getter
-@Table(name="USUARIOS")
-@Entity
-public class Usuario {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name="NOMBRE")
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
+
+public class UsuarioEntradaDto {
     @NotNull
     @Size(min = 1, max = 250)
     private String nombre;
-    @Column(name="APELLIDO")
     @NotNull
     @Size(min = 1, max = 250)
     private String apellido;
-    @Column(name="EMAIL",unique = true)
+
     @NotNull
     @Size(min = 1, max = 250)
     private String mail;
-    @Column(name="CONTRASEÑA")
+
     @NotNull
     @Size(min = 1, max = 250)
     private String contraseña;
-
-    private boolean esAdmin;
-
-
+    private boolean esAdmin= false;
 
 }
