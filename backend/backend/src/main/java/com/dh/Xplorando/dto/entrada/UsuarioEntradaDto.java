@@ -23,6 +23,7 @@ public class UsuarioEntradaDto {
     @Size(min = 1, max = 250)
     private String apellido;
 
+    //agregar validaciones para mail
     @NotNull
     @Size(min = 1, max = 250)
     private String mail;

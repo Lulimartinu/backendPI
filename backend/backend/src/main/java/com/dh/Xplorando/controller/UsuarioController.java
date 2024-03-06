@@ -4,12 +4,15 @@ import com.dh.Xplorando.dto.entrada.CategoriaEntradaDto;
 import com.dh.Xplorando.dto.entrada.UsuarioEntradaDto;
 import com.dh.Xplorando.dto.salida.CategoriaSalidaDto;
 import com.dh.Xplorando.dto.salida.UsuarioSalidaDto;
+import com.dh.Xplorando.exceptions.ResourceNotFoundException;
 import com.dh.Xplorando.service.IUsuarioService;
 import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -25,5 +28,10 @@ public class UsuarioController {
     @PostMapping("/registrar")
     public ResponseEntity<UsuarioSalidaDto> registrarUsuario(@Valid @RequestBody UsuarioEntradaDto usuarioEntradaDto) throws BadRequestException {
         return new ResponseEntity<>(iUsuarioService.registrarUsuario(usuarioEntradaDto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/listar")
+    public ResponseEntity<List<UsuarioSalidaDto>> listarUsuarios() throws ResourceNotFoundException {
+        return new ResponseEntity<>(iUsuarioService.listarUsuarios(),HttpStatus.OK);
     }
 }
