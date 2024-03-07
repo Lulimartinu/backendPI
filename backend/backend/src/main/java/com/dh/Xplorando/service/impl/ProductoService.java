@@ -70,6 +70,7 @@ public class ProductoService implements IProductoService {
     @Override
     public ProductoSalidaDto crearProducto(ProductoEntradaDto productoEntradaDto) throws BadRequestException, DataIntegrityViolationException {
         Categoria categoria = categoriaRepository.findById(productoEntradaDto.getCategoriaId()).orElse(null);
+        // Categoria categoria = categoriaRepository.findById(productoEntradaDto.getCategoriaId()).orElse(null);
         if (categoria == null) {
             LOGGER.error("No se encuentra la Categoría en nuestra BDD");
             throw new BadRequestException("No se encuentra la Categoría en nuestra BDD");

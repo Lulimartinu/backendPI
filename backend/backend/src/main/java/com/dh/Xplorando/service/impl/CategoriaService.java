@@ -4,6 +4,7 @@ import com.dh.Xplorando.dto.entrada.CategoriaEntradaDto;
 import com.dh.Xplorando.dto.salida.CategoriaSalidaDto;
 import com.dh.Xplorando.dto.salida.ProductoSalidaDto;
 import com.dh.Xplorando.entity.Categoria;
+import com.dh.Xplorando.exceptions.ResourceNotFoundException;
 import com.dh.Xplorando.repository.CategoriaRepository;
 import com.dh.Xplorando.service.ICategoriaService;
 import org.modelmapper.ModelMapper;
@@ -57,6 +58,8 @@ public class CategoriaService implements ICategoriaService {
 
         return categoriaSalidaDto;
     }
+
+
 
     //MAPEO
     public Categoria dtoEntradaAentidad(CategoriaEntradaDto categoriaEntradaDto){

@@ -3,6 +3,7 @@ package com.dh.Xplorando.controller;
 import com.dh.Xplorando.dto.entrada.CategoriaEntradaDto;
 import com.dh.Xplorando.dto.salida.CategoriaSalidaDto;
 import com.dh.Xplorando.dto.salida.ProductoSalidaDto;
+import com.dh.Xplorando.entity.Categoria;
 import com.dh.Xplorando.exceptions.ResourceNotFoundException;
 import com.dh.Xplorando.service.ICategoriaService;
 import jakarta.validation.Valid;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/categorias")
@@ -32,6 +34,7 @@ public class CategoriaController {
     public ResponseEntity<List<CategoriaSalidaDto>> listarCategorias() throws ResourceNotFoundException {
         return new ResponseEntity<>(iCategoriaService.listarCategorias(),HttpStatus.OK);
     }
+
 
 
 }

@@ -13,8 +13,10 @@ import java.util.List;
 public interface ICategoriaService {
     List<CategoriaSalidaDto> listarCategorias();
 
-
     CategoriaSalidaDto crearCategoria(CategoriaEntradaDto categoriaEntradaDto) throws BadRequestException;
 
     CategoriaSalidaDto buscarCategoriaPorId(Long id) throws ResourceNotFoundException;
+
+
+
 }
