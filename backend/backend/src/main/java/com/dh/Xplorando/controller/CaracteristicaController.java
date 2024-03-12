@@ -29,4 +29,10 @@ public class CaracteristicaController {
     public ResponseEntity<List<CaracteristicaSalidaDto>> listarCaracteristicas(){
         return new ResponseEntity<>(iCaracteristicaService.listarCaracteristicas(), HttpStatus.OK);
     }
+
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<?> eliminarCaracteristica(@PathVariable Long id) throws ResourceNotFoundException {
+        iCaracteristicaService.eliminarCaracteristica(id);
+        return new ResponseEntity<>("caracteristica eliminada correctamente", HttpStatus.NO_CONTENT);
+    }
 }

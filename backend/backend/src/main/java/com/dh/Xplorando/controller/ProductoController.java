@@ -39,7 +39,7 @@ public class ProductoController {
     }
 
     @PostMapping("/registrar")
-    public ResponseEntity<ProductoSalidaDto> crearProducto(@Valid @RequestBody ProductoEntradaDto producto) throws BadRequestException {
+    public ResponseEntity<ProductoSalidaDto> crearProducto(@Valid @RequestBody ProductoEntradaDto producto) throws BadRequestException, ResourceNotFoundException {
         return new ResponseEntity<>(productoService.crearProducto(producto), HttpStatus.CREATED);
     }
     @GetMapping("/listar")
@@ -51,6 +51,7 @@ public class ProductoController {
     public ResponseEntity<ProductoSalidaDto> editarProducto(@Valid @RequestBody ProductoModificacionEntrada producto) throws ResourceNotFoundException {
         return new ResponseEntity<>(productoService.editarProducto(producto), HttpStatus.OK);
     }
+
 
 }
 

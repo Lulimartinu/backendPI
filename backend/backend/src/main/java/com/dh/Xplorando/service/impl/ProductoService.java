@@ -4,10 +4,12 @@ import com.dh.Xplorando.dto.entrada.ImagenEntradaDto;
 import com.dh.Xplorando.dto.entrada.ProductoEntradaDto;
 import com.dh.Xplorando.dto.entrada.modificacion.ProductoModificacionEntrada;
 import com.dh.Xplorando.dto.salida.*;
+import com.dh.Xplorando.entity.Caracteristica;
 import com.dh.Xplorando.entity.Categoria;
 import com.dh.Xplorando.entity.Imagen;
 import com.dh.Xplorando.entity.Producto;
 import com.dh.Xplorando.exceptions.ResourceNotFoundException;
+import com.dh.Xplorando.repository.CaracteristicaRepository;
 import com.dh.Xplorando.repository.CategoriaRepository;
 import com.dh.Xplorando.repository.ImagenRepository;
 import com.dh.Xplorando.repository.ProductoRepository;
@@ -21,7 +23,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ProductoService implements IProductoService {
@@ -33,22 +37,26 @@ public class ProductoService implements IProductoService {
     //CAMBIO
     private final ImagenRepository imagenRepository;
 
+    private final CaracteristicaRepository caracteristicaRepository;
+
     private final ModelMapper modelMapper;
     private final CategoriaService categoriaService;
+
     private final ImagenService imagenService;
 
 
 
     //@Autowired se utiliza para inyectar objetos en otros objetos. Esto permite un acoplamiento suelto entre componentes y ayuda a mantener el código más mantenible.
     @Autowired
-    public ProductoService(ProductoRepository productoRepository, CategoriaRepository categoriaRepository, ImagenRepository imagenRepository, ModelMapper modelMapper, CategoriaService categoriaService, ImagenService imagenService) {
+    public ProductoService(ProductoRepository productoRepository, CategoriaRepository categoriaRepository, ImagenRepository imagenRepository, CaracteristicaRepository caracteristicaRepository, ModelMapper modelMapper, CategoriaService categoriaService, ImagenService imagenService) {
         this.productoRepository = productoRepository;
         this.categoriaRepository = categoriaRepository;
         this.imagenRepository = imagenRepository;
+        this.caracteristicaRepository = caracteristicaRepository;
         this.modelMapper = modelMapper;
         this.categoriaService = categoriaService;
         this.imagenService = imagenService;
-        // configureMapping();
+        configureMapping();
     }
 
     //LISTAR-DETALALR (MEDIA)
@@ -105,15 +113,36 @@ public class ProductoService implements IProductoService {
     }
     */
     @Override
-    public ProductoSalidaDto crearProducto(ProductoEntradaDto productoEntradaDto) throws BadRequestException, DataIntegrityViolationException {
+    public ProductoSalidaDto crearProducto(ProductoEntradaDto productoEntradaDto) throws BadRequestException, DataIntegrityViolationException, ResourceNotFoundException {
 
-        Categoria categoria = categoriaRepository.findById(productoEntradaDto.getCategoriaId())
+       /* Categoria categoria = categoriaRepository.findById(productoEntradaDto.getCategoriaId())
                 .orElseThrow(() -> {
-                    LOGGER.error("cateroría no exist");
+                    LOGGER.error("categoría no existe");
                     return new BadRequestException("Ncateroría no exist");
                 });
+                */
+        String categoriaId = productoEntradaDto.getCategoriaString();
+        Categoria categoria = categoriaRepository.findByNombreCategoria(categoriaId);
+        if (categoria == null) {
+            throw new ResourceNotFoundException("No se encontró la categoría con el nombre proporcionado: " + categoriaId);
+        }
+
+        Set<Caracteristica> caracteristicasList = new HashSet<>();
+        Set<String> arrayDeCaracteristicas = productoEntradaDto.getCaracteristica_nombre();
+        for (String caracteristica : arrayDeCaracteristicas){
+            Caracteristica caracteristicaBuscada = caracteristicaRepository.findByNombreCaracteristica(caracteristica);
+            if (caracteristicaBuscada == null){
+                LOGGER.error("No se encontró la caracteristica buscada");
+                throw new ResourceNotFoundException("No se encontró la caracteristica en la base de datos: " + caracteristica);
+            }
+            caracteristicasList.add(caracteristicaBuscada);
+        }
+
         Producto productoEntidad = modelMapper.map(productoEntradaDto, Producto.class);
         productoEntidad.setCategoria(categoria);
+        productoEntidad.setCaracteristicas(caracteristicasList);
+
+
         List<Imagen> imagenesList = new ArrayList<>();
         for (ImagenEntradaDto imagenEntradaDto : productoEntradaDto.getImagenes()) {
             Imagen imagenEntidad = modelMapper.map(imagenEntradaDto, Imagen.class);
@@ -212,6 +241,15 @@ public class ProductoService implements IProductoService {
         return null;
     }
 
+
+    private void configureMapping(){
+        modelMapper.typeMap(Producto.class, ProductoSalidaDto.class)
+                .addMappings(mapper ->
+                {
+                    mapper.map(Producto::getCaracteristicas,ProductoSalidaDto::setCaracteristicaSalidaDtos);
+                });
+
+    }
 
     private CategoriaProductoSalidaDto categoriaSalidaDtoASalidaProductoDto(Long id) {
         return modelMapper.map(categoriaService.buscarCategoriaPorId(id), CategoriaProductoSalidaDto.class);

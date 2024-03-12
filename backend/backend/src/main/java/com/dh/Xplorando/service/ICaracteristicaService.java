@@ -11,5 +11,5 @@ public interface ICaracteristicaService {
     CaracteristicaSalidaDto crearCaracteristica(CaracteristicaEntradaDto caracteristicaEntradaDto) throws ResourceNotFoundException;
     CaracteristicaSalidaDto buscarCaracteristicaPorId(Long id) ;
 
-
+    void eliminarCaracteristica (Long id) throws ResourceNotFoundException;
 }

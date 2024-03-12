@@ -26,7 +26,6 @@ public class CaracteristicaService implements ICaracteristicaService {
         this.modelMapper = modelMapper;
     }
 
-    /*Juan:*/
 
     @Override
     public List<CaracteristicaSalidaDto> listarCaracteristicas() {
@@ -67,6 +66,17 @@ public class CaracteristicaService implements ICaracteristicaService {
 
         return caracteristicaEncontrada;
     }
+
+    @Override
+    public void eliminarCaracteristica(Long id) throws ResourceNotFoundException {
+        if (buscarCaracteristicaPorId(id) != null) {
+            LOGGER.warn("Se eliminó la caracteristica con el id : " + (buscarCaracteristicaPorId(id)));
+            caracteristicaRepository.deleteById(id);
+        } else {
+            LOGGER.error("No se encontró la caracteristica con el id : " + id);
+            throw new ResourceNotFoundException("No se ha encontrado la caracteristica con id " + id);
+        }
+    };
 
 
     //MAPEO

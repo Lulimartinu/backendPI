@@ -3,6 +3,7 @@ package com.dh.Xplorando.dto.salida;
 
 import com.dh.Xplorando.dto.entrada.CaracteristicaEntradaDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +36,8 @@ public class ProductoSalidaDto {
 
     private CategoriaProductoSalidaDto categoriaProductoSalidaDto;
 
-    private Set<CaracteristicaSalidaDto> caracteristicaSalidaDtos = new HashSet<>();
+    @JsonProperty("caracteristicas")
+    private Set<CaracteristicaSalidaDto> caracteristicaSalidaDtos= new HashSet<>();
 
 }
 
