@@ -33,10 +33,10 @@ public class Usuario {
     @NotNull
     @Size(min = 1, max = 250)
     private String mail;
-    @Column(name="CONTRASEÑA")
+    @Column(name="PASSWORD")
     @NotNull
     @Size(min = 1, max = 250)
-    private String contraseña;
+    private String password;
 
     private boolean esAdmin;
 

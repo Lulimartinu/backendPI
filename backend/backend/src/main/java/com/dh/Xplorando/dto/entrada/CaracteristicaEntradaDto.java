@@ -23,14 +23,11 @@ public class CaracteristicaEntradaDto {
 
     @NotNull(message = "El nombre de la característica no puede ser nulo")
     @Size(min = 1, max = 250)
-    private String nombre;
+    private String nombreCaracteristica;
 
     @NotNull(message = "la caracteristica debe tener un icono")
     @Size(min = 1, max = 250)
-    private String icon;
+    private String icono;
 
-    @Valid
-    @JsonProperty("productos")
-    private Set<ProductoEntradaDto> productoEntradaDtos = new HashSet<>();
 
 }

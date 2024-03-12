@@ -1,13 +1,12 @@
 package com.dh.Xplorando.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "CARACTERISTICAS")
 public class Caracteristica {
@@ -28,6 +28,7 @@ public class Caracteristica {
     @Column(name="ICONO")
     private String icono;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "caracteristicas",fetch = FetchType.LAZY)
     private Set<Producto> productos = new HashSet<>();
 

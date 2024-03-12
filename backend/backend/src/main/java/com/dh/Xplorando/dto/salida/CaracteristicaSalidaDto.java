@@ -23,6 +23,5 @@ public class CaracteristicaSalidaDto {
 
     private String icono;
 
-    private Set<ProductoSalidaDto> productoSalidaDtos = new HashSet<>();
 
 }

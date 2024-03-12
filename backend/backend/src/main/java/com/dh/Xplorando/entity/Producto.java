@@ -51,6 +51,8 @@ public class Producto {
             joinColumns = @JoinColumn(name = "producto_id"),
             inverseJoinColumns = @JoinColumn(name = "caracteristica_id")
     )
+
+    //quiero añadir caracteristicas a esta lista
     private Set<Caracteristica> caracteristicas = new HashSet<>();
 
 

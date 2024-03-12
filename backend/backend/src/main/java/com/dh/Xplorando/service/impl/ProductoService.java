@@ -67,34 +67,68 @@ public class ProductoService implements IProductoService {
     }
 
     //CREAR-REGISTRAR PRODUCTO (ALTA)
-    @Override
+   /* @Override
     public ProductoSalidaDto crearProducto(ProductoEntradaDto productoEntradaDto) throws BadRequestException, DataIntegrityViolationException {
-        Categoria categoria = categoriaRepository.findById(productoEntradaDto.getCategoriaId()).orElse(null);
-        // Categoria categoria = categoriaRepository.findById(productoEntradaDto.getCategoriaId()).orElse(null);
-        if (categoria == null) {
+        Categoria categoria = categoriaRepository.findById(productoEntradaDto.getCategoriaId()).orElseThrow(() -> {
+                    LOGGER.error("categoría no existe");
+                    return new BadRequestException("categoría no existe");
+                });
+
+       /* if (categoria == null) {
             LOGGER.error("No se encuentra la Categoría en nuestra BDD");
             throw new BadRequestException("No se encuentra la Categoría en nuestra BDD");
         }
+*//*
 
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
         Producto productoEntidad = modelMapper.map(productoEntradaDto, Producto.class);
+        productoEntidad.setCategoria(categoria);
        // productoEntidad.setId(Long.parseLong("0"));
         List<Imagen> imagenesList = new ArrayList<>();
         for (ImagenEntradaDto imagenEntradaDto : productoEntradaDto.getImagenes()) {
             Imagen imagenEntidad = modelMapper.map(imagenEntradaDto, Imagen.class);
-            LOGGER.info("imageEEEEEEEEEEEEEEEEEEEEN" + imagenEntidad);
+            LOGGER.info("imagen :" + imagenEntidad);
             imagenEntidad.setProducto(productoEntidad);
             imagenesList.add(imagenEntidad);
         }
         productoEntidad.setImagenes(imagenesList);
         Producto productoCreado = productoRepository.save(productoEntidad);
-        productoCreado.setCategoria(categoria);
+      //  productoCreado.setCategoria(categoria);
 
         Producto producto = productoRepository.findById(productoCreado.getId()).orElse(null);
 
 
         ProductoSalidaDto productoSalidaDto = entidadADto(producto);
         LOGGER.info("Nuevo producto registrado con exito: {}", productoSalidaDto);
+
+        return productoSalidaDto;
+    }
+    */
+    @Override
+    public ProductoSalidaDto crearProducto(ProductoEntradaDto productoEntradaDto) throws BadRequestException, DataIntegrityViolationException {
+
+        Categoria categoria = categoriaRepository.findById(productoEntradaDto.getCategoriaId())
+                .orElseThrow(() -> {
+                    LOGGER.error("cateroría no exist");
+                    return new BadRequestException("Ncateroría no exist");
+                });
+        Producto productoEntidad = modelMapper.map(productoEntradaDto, Producto.class);
+        productoEntidad.setCategoria(categoria);
+        List<Imagen> imagenesList = new ArrayList<>();
+        for (ImagenEntradaDto imagenEntradaDto : productoEntradaDto.getImagenes()) {
+            Imagen imagenEntidad = modelMapper.map(imagenEntradaDto, Imagen.class);
+            LOGGER.info("Imagen: " + imagenEntidad);
+            imagenEntidad.setProducto(productoEntidad);
+            imagenesList.add(imagenEntidad);
+        }
+        productoEntidad.setImagenes(imagenesList);
+
+
+        Producto productoCreado = productoRepository.save(productoEntidad);
+
+
+        ProductoSalidaDto productoSalidaDto = entidadADto(productoCreado);
+        LOGGER.info("Nuevo producto registrado con éxito: {}", productoSalidaDto);
 
         return productoSalidaDto;
     }
