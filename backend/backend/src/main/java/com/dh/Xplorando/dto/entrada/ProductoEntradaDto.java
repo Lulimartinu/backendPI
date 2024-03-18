@@ -47,7 +47,7 @@ public class ProductoEntradaDto {
     @JsonProperty("categoria")
     private String categoriaString;
 
-   // private Long categoriaId;
+    // private Long categoriaId;
 
     @Valid
     @JsonProperty("caracteristicas")

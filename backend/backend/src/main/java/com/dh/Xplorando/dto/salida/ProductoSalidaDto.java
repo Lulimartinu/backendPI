@@ -34,7 +34,8 @@ public class ProductoSalidaDto {
 
     private List<ImagenSalidaDto> imagenSalidaDtoList;
 
-    private CategoriaProductoSalidaDto categoriaProductoSalidaDto;
+    @JsonProperty("categoria")
+    private CategoriaSalidaDto categoriaSalidaDto;
 
     @JsonProperty("caracteristicas")
     private Set<CaracteristicaSalidaDto> caracteristicaSalidaDtos= new HashSet<>();

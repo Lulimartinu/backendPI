@@ -5,6 +5,7 @@ import com.dh.Xplorando.dto.entrada.ProductoEntradaDto;
 import com.dh.Xplorando.dto.salida.CategoriaSalidaDto;
 import com.dh.Xplorando.dto.salida.ImagenSalidaDto;
 import com.dh.Xplorando.dto.salida.ProductoSalidaDto;
+import com.dh.Xplorando.entity.Categoria;
 import com.dh.Xplorando.exceptions.ResourceNotFoundException;
 import org.apache.coyote.BadRequestException;
 
@@ -17,6 +18,6 @@ public interface ICategoriaService {
 
     CategoriaSalidaDto buscarCategoriaPorId(Long id) throws ResourceNotFoundException;
 
-
+    CategoriaSalidaDto buscarCategoriaPorNombre(CategoriaEntradaDto categoriaEntradaDto) throws ResourceNotFoundException;
 
 }

@@ -10,6 +10,7 @@ import com.dh.Xplorando.service.ICategoriaService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class CategoriaService implements ICategoriaService {
     }
 
     @Override
-    public CategoriaSalidaDto crearCategoria(CategoriaEntradaDto categoriaEntradaDto) {
+    public CategoriaSalidaDto crearCategoria(CategoriaEntradaDto categoriaEntradaDto)  {
         Categoria categoriaRecibida = dtoEntradaAentidad(categoriaEntradaDto);
         Categoria categoriaRegistrada = categoriaRepository.save(categoriaRecibida);
         CategoriaSalidaDto categoriaResultado = entidadAdtoSalida(categoriaRegistrada);
@@ -59,6 +60,21 @@ public class CategoriaService implements ICategoriaService {
         return categoriaSalidaDto;
     }
 
+    @Override
+    public CategoriaSalidaDto buscarCategoriaPorNombre(CategoriaEntradaDto categoriaEntradaDto) throws ResourceNotFoundException {
+        String nombreCategoria = categoriaEntradaDto.getNombreCategoria();
+        Categoria categoriaPorNombre = categoriaRepository.findByNombreCategoria(nombreCategoria);
+
+        CategoriaSalidaDto categoriaEncontrada = null;
+        if(categoriaEncontrada!= null){
+            categoriaEncontrada = entidadAdtoSalida(categoriaPorNombre);
+            LOGGER.info("Categoría encontrada por nombre: " +categoriaPorNombre);
+        } else{
+            LOGGER.info("No se encontró la categoría con el nombre: " + nombreCategoria);
+            throw new ResourceNotFoundException("No se encontró la categoría con el nombre : " + nombreCategoria);
+        }
+        return categoriaEncontrada;
+    }
 
 
     //MAPEO

@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public String handlerDataIntegrityViolationException(DataIntegrityViolationException ex){
-        return "Error: El nombre del Producto ya existe, por favor, ingrese otro nombre";
+        return "Error: El nombre ingresado ya existe, por favor, ingrese otro nombre";
     }
 
 }
